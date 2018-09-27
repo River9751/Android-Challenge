@@ -25,7 +25,8 @@ class MainActivity : AppCompatActivity() {
             false
         }
 
-        seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+
+        val seekBarChangeListener = object : SeekBar.OnSeekBarChangeListener {
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {}
@@ -35,7 +36,20 @@ class MainActivity : AppCompatActivity() {
                 percentView.text = "打折（$progress%)"
                 calculateResult()
             }
-        })
+        }
+        seekBar.setOnSeekBarChangeListener(seekBarChangeListener)
+
+//        seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+//            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+//
+//            override fun onStopTrackingTouch(seekBar: SeekBar?) {}
+//
+//            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+//                percent = progress
+//                percentView.text = "打折（$progress%)"
+//                calculateResult()
+//            }
+//        })
     }
 
     fun calculateResult() {
