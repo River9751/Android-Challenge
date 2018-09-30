@@ -64,5 +64,5 @@ editText.setOnEditorActionListener(object : TextView.OnEditorActionListener {
     }
 })
 ```
->這邊要注意 onEditorAction 的回傳值，代表是否要隱藏鍵盤。
+>這邊要注意 onEditorAction 的回傳值，代表是否要保留鍵盤。
 >
