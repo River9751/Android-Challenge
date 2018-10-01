@@ -5,6 +5,7 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.widget.ImageView
 
+
 class CustomView : ImageView {
 
     private var downX = 0f
@@ -23,27 +24,36 @@ class CustomView : ImageView {
         None
     }
 
-    constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
+    constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
+        // 取得螢幕解析度
+        deviceWidth = resources.displayMetrics.widthPixels
+        deviceHeight = resources.displayMetrics.heightPixels
+        naviBarHeight = getNavigationBarHeight()
+    }
 
+
+    var deviceWidth = 0
+    var deviceHeight = 0
+
+
+    var naviBarHeight = 0
     override fun onTouchEvent(event: MotionEvent?): Boolean {
-
         performClick()
 
         when (event?.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
+                mode = Mode.Drag
                 downX = event.x
                 downY = event.y
-                mode = Mode.Drag
             }
             MotionEvent.ACTION_POINTER_DOWN -> {
-                //println("*** ACTION_POINTER_DOWN")
+                mode = Mode.Zoom
                 oriDistance = getDistance(
                         event.getX(0),
                         event.getY(0),
                         event.getX(1),
                         event.getY(1)
                 )
-                mode = Mode.Zoom
             }
             MotionEvent.ACTION_MOVE -> {
                 when (mode) {
@@ -52,12 +62,36 @@ class CustomView : ImageView {
                             //先求出偏移量(此時 View 還沒有移動位置)
                             offsetX = (event.x - downX).toInt()
                             offsetY = (event.y - downY).toInt()
-                            setFrame(
-                                    this.left + offsetX,
-                                    this.top + offsetY,
-                                    this.right + offsetX,
-                                    this.bottom + offsetY
-                            )
+
+                            //新的邊界值
+                            var newLeft = this.left + offsetX
+                            var newTop = this.top + offsetY
+                            var newRight = this.right + offsetX
+                            var newBottom = this.bottom + offsetY
+
+                            //判斷是否超過邊界
+                            //右邊界
+                            if (newRight >= deviceWidth) {
+                                newRight = deviceWidth
+                                newLeft = deviceWidth - this.width
+                            }
+                            //左邊界
+                            if (newLeft <= 0) {
+                                newLeft = 0
+                                newRight = this.width
+                            }
+                            //上邊界
+                            if (newTop <= 0) {
+                                newTop = 0
+                                newBottom = this.height
+                            }
+                            //下邊界
+                            if (newBottom >= deviceHeight - naviBarHeight) {
+                                newBottom = deviceHeight - naviBarHeight
+                                newTop = deviceHeight - this.height - naviBarHeight
+                            }
+
+                            setFrame(newLeft, newTop, newRight, newBottom)
                         }
                     }
                     Mode.Zoom -> {
@@ -66,8 +100,8 @@ class CustomView : ImageView {
                         val x2 = event.getX(1)
                         val y2 = event.getY(1)
 
-                        println("$x1, $y1, $x2, $y2")
-                        var distance = getDistance(x1, x2, y1, y2)
+                        //println("$x1, $y1, $x2, $y2")
+                        var distance = getDistance(x1, y1, x2, y2)
 
                         var ratio = distance / oriDistance
                         scaleImage(ratio)
@@ -100,6 +134,7 @@ class CustomView : ImageView {
 
     fun scaleImage(ratio: Double) {
 
+        println("RRR " + ratio)
         if (ratio > 1) {
             val increasedWidth = this.width * (ratio - 1)
             val increasedHeight = this.height * (ratio - 1)
@@ -122,5 +157,13 @@ class CustomView : ImageView {
 
             setFrame(left.toInt(), top.toInt(), right.toInt(), bottom.toInt())
         }
+    }
+
+    fun getNavigationBarHeight(): Int {
+        val resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android")
+        if (resourceId > 0) {
+            return resources.getDimensionPixelSize(resourceId)
+        }
+        return 0
     }
 }
