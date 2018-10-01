@@ -1,11 +1,12 @@
 ScalableImage
 ===
-
-![](https://i.imgur.com/9ErOBhF.gif)
+![](https://i.imgur.com/99IXGEl.gif)
 
 目標項目：
 - 前置作業
+
 - 拖拉事件的處理
+- 邊界的判斷
 - 縮放事件的判斷
 
 ## 前置作業
@@ -78,6 +79,46 @@ override fun onTouchEvent(event: MotionEvent?): Boolean {
 基本思路是，在按下的時候(ACTION_DOWN)，把我們按下當時的座標給記錄下來，然後在移動的時候(ACTION_MOVE)，計算出按下位置的偏移量，然後透過 setFrame() 更新自己的位置。
 >event.x 和 event.y 是相對於自身這個View的起點(左上角為 0, 0) 的座標位置。
 
+## 邊界的判斷
+在接觸到邊界時，我們會希望 imageView 不要超出邊界
+```kotlin
+//先求出偏移量(此時 View 還沒有移動位置)
+offsetX = (event.x - downX).toInt()
+offsetY = (event.y - downY).toInt()
+
+//新的邊界值
+var newLeft = this.left + offsetX
+var newTop = this.top + offsetY
+var newRight = this.right + offsetX
+var newBottom = this.bottom + offsetY
+
+//判斷是否超過邊界
+//右邊界
+if (newRight >= deviceWidth) {
+    newRight = deviceWidth
+    newLeft = deviceWidth - this.width
+}
+//左邊界
+if (newLeft <= 0) {
+    newLeft = 0
+    newRight = this.width
+}
+//上邊界
+if (newTop <= 0) {
+    newTop = 0
+    newBottom = this.height
+}
+//下邊界
+if (newBottom >= deviceHeight) {
+    newBottom = deviceHeight
+    newTop = deviceHeight - this.height
+}
+
+setFrame(newLeft, newTop, newRight, newBottom)
+
+```
+
+
 ## 縮放事件的判斷
 
 因為縮放事件我們會用到兩指操作，所以在兩指同時按下時， TouchEvent 會進入 ACTION_POINTER_DOWN 這個 MotionEvent
@@ -99,7 +140,7 @@ override fun onTouchEvent(event: MotionEvent?): Boolean {
                 val x2 = event.getX(1)
                 val y2 = event.getY(1)
 
-                var distance = getDistance(x1, x2, y1, y2)
+                var distance = getDistance(x1, y1, x2, y2)
 
                 var ratio = distance / oriDistance
                 scaleImage(ratio)

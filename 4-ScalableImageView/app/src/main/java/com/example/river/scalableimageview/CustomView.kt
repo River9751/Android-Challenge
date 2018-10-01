@@ -16,8 +16,6 @@ class CustomView : ImageView {
     private var mode = Mode.None
     private var oriDistance = 0.0
 
-//    constructor(context: Context?) : super(context)
-
     enum class Mode {
         Zoom,
         Drag,
@@ -31,10 +29,8 @@ class CustomView : ImageView {
         naviBarHeight = getNavigationBarHeight()
     }
 
-
     var deviceWidth = 0
     var deviceHeight = 0
-
 
     var naviBarHeight = 0
     override fun onTouchEvent(event: MotionEvent?): Boolean {
@@ -134,7 +130,6 @@ class CustomView : ImageView {
 
     fun scaleImage(ratio: Double) {
 
-        println("RRR " + ratio)
         if (ratio > 1) {
             val increasedWidth = this.width * (ratio - 1)
             val increasedHeight = this.height * (ratio - 1)
