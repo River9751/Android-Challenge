@@ -1,8 +1,11 @@
 package com.example.river.scalableimageview
 
+import android.app.Activity
 import android.content.Context
+import android.support.design.widget.Snackbar
 import android.util.AttributeSet
 import android.view.MotionEvent
+import android.view.View
 import android.widget.ImageView
 
 
@@ -41,6 +44,11 @@ class CustomView : ImageView {
                 mode = Mode.Drag
                 downX = event.x
                 downY = event.y
+
+                Snackbar.make(this.parent as View,
+                        "Mode = Drag",
+                        Snackbar.LENGTH_SHORT)
+                        .show()
             }
             MotionEvent.ACTION_POINTER_DOWN -> {
                 mode = Mode.Zoom
@@ -50,6 +58,10 @@ class CustomView : ImageView {
                         event.getX(1),
                         event.getY(1)
                 )
+                Snackbar.make(this.parent as View,
+                        "Mode = Zoom",
+                        Snackbar.LENGTH_SHORT)
+                        .show()
             }
             MotionEvent.ACTION_MOVE -> {
                 when (mode) {
@@ -160,5 +172,9 @@ class CustomView : ImageView {
             return resources.getDimensionPixelSize(resourceId)
         }
         return 0
+    }
+
+    fun setActionBarText(eventX: Int, eventY: Int) {
+        (context as Activity).title = "event.x: $eventX, event.y: $eventY"
     }
 }
