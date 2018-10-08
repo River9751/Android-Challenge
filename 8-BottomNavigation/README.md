@@ -72,12 +72,6 @@ class BottomNavigationView(context: Context?) : NavigationView(context)
 
 </android.support.constraint.ConstraintLayout>
 ```
->這邊有遇到一個問題，如果不是用
-> android.support.design.widget.BottomNavigationView 
-> 而是用
-> android.support.design.widget.NavigationView 
-> 在使用這個 view 時會無法設定 setOnNavigationItemSelectedListener
-> 尚未查到原因
 
 ## Fragment 設定
 三個圖示按下時會對應三個 Fragment
@@ -119,7 +113,76 @@ class NotificationFragment  : Fragment() {
 ```
 
 ## Activity 設定
-這邊就從第二個 Activity 開始(第一個 Activity 為 MainActivity)
+首先是首頁的 MainActivity
+建立一個列舉類別，然後建立一個 type 變數來代表現在按下的 item
+另外需要一個 supportFragmentManager 來管理 fragment
+後續也會使用 FragmentTransaction() 來執行 fragment 間的切換
+
+```kotlin
+class MainActivity : AppCompatActivity() {
+
+    enum class FragmentType {
+        Home,
+        Notifications,
+        Dashboard
+    }
+
+    var type = FragmentType.Home
+    val manager = this.supportFragmentManager
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+
+        navigation.setOnNavigationItemSelectedListener {
+            when (it.itemId) {
+                R.id.navigation_home -> {
+                    type = FragmentType.Home
+                }
+                R.id.navigation_notifications -> {
+                    type = FragmentType.Notifications
+                }
+                R.id.navigation_dashboard -> {
+                    type = FragmentType.Dashboard
+                }
+                else -> {
+                    return@setOnNavigationItemSelectedListener false
+                }
+            }
+
+            changeScenario()
+            true
+        }
+
+        changeScenario()
+    }
+
+    fun changeScenario() {
+        val transaction = manager.beginTransaction()
+        when (type) {
+            FragmentType.Home -> {
+                val homeFragment = HomeFragment()
+                transaction.replace(R.id.container, homeFragment)
+            }
+
+            FragmentType.Dashboard -> {
+                val dashboardFragment = DashboardFragment()
+                transaction.replace(R.id.container, dashboardFragment)
+            }
+
+            FragmentType.Notifications -> {
+                val notificationFragment = NotificationFragment()
+                transaction.replace(R.id.container, notificationFragment)
+            }
+
+        }
+        transaction.addToBackStack(null)
+        transaction.commit()
+    }
+
+}
+```
 先自訂一個 Home2Activity 類別
 使用 setDisplayHomeAsUpEnabled(true) 來顯示左上角的返回按鈕
 並覆寫 onOptionsItemSelected 方法來觸發 onBackPressed 回上一頁
@@ -181,3 +244,4 @@ class Home3Activity : AppCompatActivity() {
     }
 }
 ```
+

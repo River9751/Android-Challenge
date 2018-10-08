@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
         val transaction = manager.beginTransaction()
         when (type) {
             FragmentType.Home -> {
-                title = "Home"
+//                title = "Home"
                 val homeFragment = HomeFragment()
                 transaction.replace(R.id.container, homeFragment)
             }
@@ -66,5 +66,4 @@ class MainActivity : AppCompatActivity() {
         transaction.addToBackStack(null)
         transaction.commit()
     }
-
 }
