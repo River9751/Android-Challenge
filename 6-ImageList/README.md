@@ -2,7 +2,7 @@ ImageList
 ===
 **RecyclerView的使用**
 
-
+![](https://i.imgur.com/0duiciv.gif)
 
 比起 ListView，RecyclerView 有更好的記憶體管理，也可以方便的連結 layout
 

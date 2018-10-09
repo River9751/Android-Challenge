@@ -14,6 +14,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+
         getImages()
         textView.text = "1 / ${imageList.size}"
 
@@ -37,7 +38,7 @@ class MainActivity : AppCompatActivity() {
         imageList = arrayListOf()
         for (i in R.drawable.img01..R.drawable.img06) {
             imageList.add(i)
-            println("*** " + i.toString())
+//            println("*** " + i.toString())
         }
     }
 }

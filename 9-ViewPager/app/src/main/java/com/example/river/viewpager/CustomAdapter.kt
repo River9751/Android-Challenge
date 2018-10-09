@@ -19,6 +19,7 @@ class CustomAdapter : PagerAdapter {
     }
 
     override fun isViewFromObject(p0: View, p1: Any): Boolean {
+        println("*** isViewFromObject View:${p0.tag} Any:${(p1 as View).tag}")
         return p0 == p1
     }
 
@@ -32,12 +33,18 @@ class CustomAdapter : PagerAdapter {
 
         val v = inflater.inflate(R.layout.image_layout, container, false)
         v.imageView.setImageResource(imageList[position])
+
+        v.tag = "image${position+1}"
+
         container.addView(v)
+
+        println("*** instantiateItem ${v.tag}")
 
         return v
     }
 
     override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
+        println("*** destroyItem ${(`object` as View).tag}")
         container.removeView(`object` as ConstraintLayout)
     }
 }

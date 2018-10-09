@@ -31,7 +31,7 @@ MainActivity:
 一開始要取得所有照片的 id
 這邊有學到一個新方法，加入 drawable 的照片會依照排列給予 id 
 所以可以使用 for 迴圈來把照片的 id 都加到 imageList 裡
-```kotlin
+```kotlin=
 fun getImages() {
     imageList = arrayListOf()
     for (i in R.drawable.img01..R.drawable.img06) {
@@ -40,7 +40,7 @@ fun getImages() {
 }
 ```
 
-```kotlin
+```kotlin=
 override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_main)
@@ -70,7 +70,7 @@ override fun onCreate(savedInstanceState: Bundle?) {
 imageList 拿來存放照片資源檔的 id
 
 覆寫 instantiateItem 可以讓我們把 inflate 出來的 View 加到容器中
-```kotlin
+```kotlin=
 
 class CustomAdapter : PagerAdapter {
 
@@ -106,3 +106,35 @@ class CustomAdapter : PagerAdapter {
     }
 }
 ```
+把 View 的資訊存入 tag 再 print 出來
+程式剛啟動的狀況：
+```
+*** instantiateItem image1
+*** instantiateItem image2
+*** isViewFromObject View:image1 Any:image1
+*** isViewFromObject View:image2 Any:image1
+*** isViewFromObject View:image2 Any:image2
+*** isViewFromObject View:image1 Any:image1
+*** isViewFromObject View:image2 Any:image1
+*** isViewFromObject View:image2 Any:image2
+*** isViewFromObject View:image1 Any:image1
+*** isViewFromObject View:image2 Any:image1
+*** isViewFromObject View:image2 Any:image2
+```
+
+移動到第四張時：
+```
+*** destroyItem image1
+*** instantiateItem image4
+*** isViewFromObject View:image4 Any:image2
+*** isViewFromObject View:image4 Any:image3
+*** isViewFromObject View:image4 Any:image4
+*** isViewFromObject View:image2 Any:image2
+*** isViewFromObject View:image3 Any:image2
+*** isViewFromObject View:image3 Any:image3
+*** isViewFromObject View:image4 Any:image2
+*** isViewFromObject View:image4 Any:image3
+*** isViewFromObject View:image4 Any:image4
+```
+測試發現 ViewPager 只會保留當前內容和前後一張的內容
+但不清楚為什麼 isViewFromObject 會判斷這麼多次
