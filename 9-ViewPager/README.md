@@ -31,7 +31,7 @@ MainActivity:
 一開始要取得所有照片的 id
 這邊有學到一個新方法，加入 drawable 的照片會依照排列給予 id 
 所以可以使用 for 迴圈來把照片的 id 都加到 imageList 裡
-```kotlin=
+```kotlin
 fun getImages() {
     imageList = arrayListOf()
     for (i in R.drawable.img01..R.drawable.img06) {
@@ -40,7 +40,7 @@ fun getImages() {
 }
 ```
 
-```kotlin=
+```kotlin
 override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_main)
@@ -70,7 +70,7 @@ override fun onCreate(savedInstanceState: Bundle?) {
 imageList 拿來存放照片資源檔的 id
 
 覆寫 instantiateItem 可以讓我們把 inflate 出來的 View 加到容器中
-```kotlin=
+```kotlin
 
 class CustomAdapter : PagerAdapter {
 
