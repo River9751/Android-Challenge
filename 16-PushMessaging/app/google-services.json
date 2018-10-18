@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "159918428270",
+    "firebase_url": "https://pushmessaging-30673.firebaseio.com",
+    "project_id": "pushmessaging-30673",
+    "storage_bucket": "pushmessaging-30673.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:159918428270:android:6a4897e633299b70",
+        "android_client_info": {
+          "package_name": "com.example.river.pushmessaging"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "159918428270-aq6kgpl99s0rc96oqrilm71viuori35t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.river.pushmessaging",
+            "certificate_hash": "5177284f703ba1fda9cd2e3b20b36b10ef9b6b28"
+          }
+        },
+        {
+          "client_id": "159918428270-d1b10amg15aa0fs87ng4kjb4npt041fp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCKiWjVvXRATjcW6X_e2jDuIX_6SV1-F3s"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "159918428270-d1b10amg15aa0fs87ng4kjb4npt041fp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
