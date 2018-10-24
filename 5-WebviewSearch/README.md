@@ -2,7 +2,7 @@ WebViewSearch
 ===
 **WebView 的基本使用**
 
-![](https://i.imgur.com/G3KKFSO.gif)
+![](https://i.imgur.com/oFLjDvz.gif)
 
 目標項目：
 - WebView 設定
