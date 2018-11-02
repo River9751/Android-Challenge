@@ -1,6 +1,8 @@
 Alarm(DatePickerDialog, TimePickerDialog)
 ===
 
+![](https://i.imgur.com/g5QdLbj.gif)
+
 學習使用內建的 Dialog 來選擇時間和日期
 首先在 MainActivity 中宣告
 ```kotlin

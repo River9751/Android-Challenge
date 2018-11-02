@@ -1,5 +1,6 @@
 ViewPager
 ===
+![](https://i.imgur.com/fEHIjX7.gif)
 
 要製作一個可以左右滑動照片的效果
 可以使用 ViewPager 來達成

@@ -1,5 +1,8 @@
 ProgressControl
 ===
+
+![](https://i.imgur.com/pFU5uAZ.gif)
+
 這次要試著嘗試使用 Runnable 物件
 和認識 Thread, HandlerThread, Handler, Runnable 之間的關係
 
