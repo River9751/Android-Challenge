@@ -1,4 +1,4 @@
-Day 24
+Day 24 LocalDatabase
 ===
 
 今天學習如何儲存資料到 SQLite 資料庫
